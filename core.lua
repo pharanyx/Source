@@ -7,6 +7,7 @@ module("core", package.seeall)
 -- Core System Variables
 
 font_size = "12px"
+realm = "Aetolia"
 state = "Active"
 ui_font = "Hack"
 version = "0.9.1"
