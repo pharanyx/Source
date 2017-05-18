@@ -21,7 +21,7 @@ function loadSystemModules()
 	package.path = string.format("%s;%s;%s;%s", path, lua_dir, init_dir, sysdir)
 	package.cpath = string.format("%s;%s;%s;%s", cpath, lua_dir, init_dir, sysdir)
 
-	local m = SYSROOT_DEFINED and { "affs", "core", "ui" } or nil
+	local m = SYSROOT_DEFINED and { "affs", "can", "core", "ui" } or nil
 	for _, n in ipairs(m) do
 		_G[n] = nil
 		package.loaded[n] = nil
@@ -36,7 +36,7 @@ function loadSystemModules()
 		
 		_G[n] = c
 
-		jfm.echo("Module '"..n.."' loaded.\n")
+		jfm.echo("Module '"..n.."' loaded.")
 	end
 
 	package.path = path

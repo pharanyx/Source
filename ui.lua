@@ -1,7 +1,7 @@
 module("ui", package.seeall)
 
 
--- Jagged User Interface
+-- Project Source User Interface
 
 
 -- Set Interface Dynamics
@@ -110,7 +110,7 @@ labels.header = Geyser.Label:new({
 	message = [[
 		<p style="font-size: ]] .. core.font_size .. 
 		[[; font-family: ']] .. core.ui_font .. 
-		[[';"><b><font color="brown">> Jagged for Mudlet v<font color="aquamarine">]] .. core.version ..
+		[[';"><b><font color="brown">> Project Source v<font color="aquamarine">]] .. core.version ..
 		[[ <font color="brown">  |   Name:<font color="aquamarine"> ]] .. "..." .. 
 		[[<font color="brown">   |   House:<font color="aquamarine"> ]] .. "..." .. 
 		[[</font></p>
@@ -157,7 +157,7 @@ end
 
 
 function footer()
-    cecho("\n<firebrick>+<aquamarine>"..string.rep("-", 55).."<firebrick> [<slate_grey> Taerbot-".."0.9b".." <firebrick>]<aquamarine> "..string.rep("-", 11).."<firebrick>+\n")
+    cecho("\n<firebrick>+<aquamarine>"..string.rep("-", 55).."<firebrick> [<slate_grey> Source-"..core.version.." <firebrick>]<aquamarine> "..string.rep("-", 11).."<firebrick>+\n")
 end
 
 
@@ -356,7 +356,7 @@ function updateHeader()
 	local out = [[
 		<p style="font-size: ]] .. core.font_size .. 
 		[[; font-family: ']] .. core.ui_font .. 
-		[[';"><b><font color="brown">> Jagged for Mudlet v<font color="aquamarine">]] .. core.version ..
+		[[';"><b><font color="brown">> Project Source v<font color="aquamarine">]] .. core.version ..
 		[[ <font color="brown">  |   Name:<font color="aquamarine"> ]] .. gmcp.Char.Status.name .. 
 		[[<font color="brown">   |   Class:<font color="aquamarine"> ]] .. gmcp.Char.Status.class .. 
 		[[</font></p>
@@ -387,7 +387,7 @@ elements.chat.config.location = "topright"
 elements.chat.config.channels = {
   "All",
   "City",
-  "House",
+  "Guild",
   "Clans",
   "Tells",
   "Combat",
