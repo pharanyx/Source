@@ -111,8 +111,8 @@ labels.header = Geyser.Label:new({
 		<p style="font-size: ]] .. core.font_size .. 
 		[[; font-family: ']] .. core.ui_font .. 
 		[[';"><b><font color="brown">> Jagged for Mudlet v<font color="aquamarine">]] .. core.version ..
-		[[ <font color="brown">  |   Name:<font color="aquamarine"> ]] .. "Yggras" .. 
-		[[<font color="brown">   |   House:<font color="aquamarine"> ]] .. "Dawnblade (HR1)" .. 
+		[[ <font color="brown">  |   Name:<font color="aquamarine"> ]] .. "..." .. 
+		[[<font color="brown">   |   House:<font color="aquamarine"> ]] .. "..." .. 
 		[[</font></p>
 	]]
 }, containers.header)
@@ -351,6 +351,19 @@ function updateStatusbar()
 	labels.status:echo(out)
 end
 
+function updateHeader()
+	if not gmcp.Char then return end
+	local out = [[
+		<p style="font-size: ]] .. core.font_size .. 
+		[[; font-family: ']] .. core.ui_font .. 
+		[[';"><b><font color="brown">> Jagged for Mudlet v<font color="aquamarine">]] .. core.version ..
+		[[ <font color="brown">  |   Name:<font color="aquamarine"> ]] .. gmcp.Char.Status.name .. 
+		[[<font color="brown">   |   Class:<font color="aquamarine"> ]] .. gmcp.Char.Status.class .. 
+		[[</font></p>
+	]]
+
+	labels.header:echo(out)
+end
 
 
 -- Chat Component
