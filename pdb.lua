@@ -1,7 +1,7 @@
 module("pdb", package.seeall)
 
 
--- Seoena player database tracking
+-- Project Source player database tracking
 
 schema = {
 	class = "unset",
