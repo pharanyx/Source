@@ -30,7 +30,7 @@ add = function(self, name)
 	local name = name:title()
 	if not pdb.players[name] then
 		pdb.players[name] = shallowcopy(pdb.schema)
-		e:echo("Player database entry added for <SpringGreen>"..name..".")
+		jfm.echo("Player database entry added for <SpringGreen>"..name..".")
 		pdb:get_api_data(name)
 	end
 end
@@ -38,7 +38,7 @@ end
 del = function(self, name)
 	local name = name:title()
 	pdb.players[name] = nil
-	e:echo("Player database entry removed for <SpringGreen>"..name..".")
+	jfm.echo("Player database entry removed for <SpringGreen>"..name..".")
 end
 
 save = function()
@@ -49,14 +49,14 @@ end
 load = function()
 	local sysdir = getMudletHomeDir().."/source/pdb/"
 	table.load(sysdir .. "playerdb.lua", pdb.players)
-	e:echo("Player database loaded.")
+	jfm.echo("Player database loaded.")
 end
 
 get_api_data = function (self, name)
 	local name = name:title()
 	local sysdir = getMudletHomeDir().."/source/pdb/"
 	if not lfs.attributes(sysdir) then
-		e:error("Character data folder not found or deleted!")
+		jfm.error("Character data folder not found or deleted!")
 	else
 		downloadFile(sysdir..name..".json", "http://api.aetolia.com/characters/"..name..".json")
 	end
