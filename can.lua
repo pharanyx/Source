@@ -23,7 +23,7 @@ end
 
 herb = function ()
 	return core.bals.herb
-		and not fs:check("herb")
+		and not core:fscheck("herb")
 		and not affs:has("anorexia")
 		and not affs:has("transfix")
 		and not affs:has("asleep")
@@ -44,13 +44,13 @@ end
 pipe = function ()
 	return not affs:has("asthma")
 			and core.bals.pipe
-			and not fs:check("pipe")
+			and not core:fscheck("pipe")
 			and not affs:has("asleep")
 end
 
 salve = function ()
 	return core.bals.salve 
-		and not fs:check("salve") 
+		and not core:fscheck("salve") 
 		and not affs:has("slickness")
 		and not affs:has("sandrot")
 		and not affs:has("asleep")
@@ -58,7 +58,7 @@ end
 
 elixir = function ()
 	return core.bals.elixir
-		and not fs:check("elixir")
+		and not core:fscheck("elixir")
 		and not affs:has("anorexia")
 		and not affs:has("asleep")
 		and not affs:has("indifference")
@@ -66,9 +66,9 @@ end
 
 focus = function ()
 	return core.bals.focus
-		and not fs:check("focus")
+		and not core:fscheck("focus")
 	 	and not core.systems.bashing
-		and gmcp:hasSkill("Focusing")
+		and gmcp:has_skill("Focusing")
 		and not affs:has("impatience")
 		and not affs:has("asleep")
 end
@@ -92,13 +92,13 @@ stand = function ()
 		and not affs:has("feed")
 		and not affs:has("tangle")()
 		and not affs:has("grappled")
-		and not fs:check("stand")
+		and not core:fscheck("stand")
 		and not affs:has("unconscious")
 		and core.bals.both()
 end
 
 kipup = function ()
-	return not fs:check("kipup")
+	return not core:fscheck("kipup")
 		and (core.vitals.class == "monk" or core.vitals.class == "zealot")
 		and core.last_stance
 		and not affs:has("paralysis")
@@ -108,7 +108,7 @@ kipup = function ()
 end
 
 writhe = function ()
-	return not fs:check("writhe")
+	return not core:fscheck("writhe")
 		and not affs:has("frozen")
 		and not affs:has("stun")
 		and not affs:has("asleep")
@@ -126,7 +126,7 @@ end
 refill = function ()
 	return not affs:has("leftarmbroken")
 		and not affs:has("rightarmbroken")
-		and not fs:check("refill")
+		and not core:fscheck("refill")
 		and not affs:has("asleep")
 		and core.bals.both()
 end
@@ -134,7 +134,7 @@ end
 tree = function ()
 	return core.bals.tree
 		and (core.tattoos and core.tattoos.tree)
-		and not fs:check("tree")
+		and not core:fscheck("tree")
 		and not core.systems.bashing
 		and (not affs:has("leftarmbroken") or not affs:has("rightarmbroken"))
 		and 
@@ -150,7 +150,7 @@ end
 
 renew = function ()
 	return core.bals.renew
-		and not fs:check("renew")
+		and not core:fscheck("renew")
 		and (gmcp.Char.Status.race == "ildreth" or gmcp.Char.Status.race == "yeleni" or gmcp.Char.Status.race == "azudim")
 		and not core.systems.bashing
 
@@ -173,18 +173,18 @@ end
 
 shrug = function ()
 	return core.bals.shrug
-		and gmcp:hasSkill("Shrugging")
+		and gmcp:has_skill("Shrugging")
 		and not affs:has("stunnded")
 		and not affs:has("asleep")
 		and not affs:has("frozen")
 		and not affs:has("petrified")
-		and not fs:check("shrug")
+		and not core:fscheck("shrug")
 end
 
 parry = function ()
 	return core.bals.equilibrium
 		and core.bals.balance
-		and not fs:check("parry")
+		and not core:fscheck("parry")
 		and not affs:has("paralysis")
 		and not affs:has("prone")
 		and not affs:has("frozen")
@@ -192,9 +192,9 @@ parry = function ()
 		and not affs:has("stun")
 		and not affs:has("tangle")()
 		and (
-			gmcp:hasSkill("Parrying")
-			or gmcp:hasSkill("Pawguard")
-			 or gmcp:hasSkill("Guarding")
+			gmcp:has_skill("Parrying")
+			or gmcp:has_skill("Pawguard")
+			 or gmcp:has_skill("Guarding")
 		)
 end
 
@@ -219,7 +219,7 @@ target = function ()
 end
 
 mount = function ()
-	return gmcp:hasSkill("Quickmounting")
+	return gmcp:has_skill("Quickmounting")
 		and core.settings.entities.horse ~= "0"
 		and not core.defs.active.shapeshifter  
 		and core.vitals.class ~= "monk" and core.vitals.class ~= "zealot"

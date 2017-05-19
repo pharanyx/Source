@@ -72,7 +72,7 @@ is_enemy = function (self, name)
 	return pdb.players[name].enemy == true and true or false
 end
 
-is_demigod = function (self, name)
+is_endlevel = function (self, name)
 	local name = name:title()
 	return pdb.players[name].demigod == true and true or false
 end
@@ -92,6 +92,85 @@ in_room = function (self, name)
 	return pdb.players[name].in_room == true and true or false
 end
 
+is_duiran = function (self, name)
+	local name = name:title()
+	return pdb.players[name].city == "Duiran" and true or false
+end
+
+is_enorian = function (self, name)
+	local name = name:title()
+	return pdb.players[name].city == "Enorian" and true or false
+end
+
+is_loch = function (self, name)
+	local name = name:title()
+	return pdb.players[name].city == "Bloodloch" and true or false
+end
+
+is_spines = function (self, name)
+	local name = name:title()
+	return pdb.players[name].city == "Spinesreach" and true or false
+end
+
+is_sentaari = function (self, name)
+	local name = name:title()
+	return pdb.players[name].guild == "Sentaari" and true or false
+end
+
+is_sentinel = function (self, name)
+	local name = name:title()
+	return pdb.players[name].guild == "Sentinels" and true or false
+end
+
+is_templar = function (self, name)
+	local name = name:title()
+	return pdb.players[name].guild == "Templar" and true or false
+end
+
+is_syssin = function (self, name)
+	local name = name:title()
+	return pdb.players[name].guild == "Syssin" and true or false
+end
+
+is_carnifex = function (self, name)
+	local name = name:title()
+	return pdb.players[name].guild == "Carnifex" and true or false
+end
+
+is_teradrim = function (self, name)
+	local name = name:title()
+	return pdb.players[name].guild == "Teradrim" and true or false
+end
+
+is_archivist = function (self, name)
+	local name = name:title()
+	return pdb.players[name].guild == "Archivists" and true or false
+end
+
+is_ascendril = function (self, name)
+	local name = name:title()
+	return pdb.players[name].guild == "Ascendril" and true or false
+end
+
+is_sciomancer = function (self, name)
+	local name = name:title()
+	return pdb.players[name].guild == "Sciomancers" and true or false
+end
+
+is_shaman = function (self, name)
+	local name = name:title()
+	return pdb.players[name].guild == "Shamans" and true or false
+end
+
+is_indorani = function (self, name)
+	local name = name:title()
+	return pdb.players[name].guild == "Indorani" and true or false
+end
+
+is_illumini = function (self, name)
+	local name = name:title()
+	return pdb.players[name].guild == "Illumini" and true or false
+end
 
 function got_pdb_data(self, _, fn)
 	if not fn:find(".json", 1, true) then return end
@@ -129,9 +208,14 @@ function got_pdb_data(self, _, fn)
 		"Idreth"
 	}
 
-	players[data.name].org = data.city:title()
+	players[data.name].city = data.city:title()
+	players[data.name].name = data.name
+	players[data.name].fullname = data.fullname
 	players[data.name].guild = data.guild
-	players[data.name].demigod = tonumber(data.level) >= 100 and true or false
+	players[data.name].class = data.class
+	players[data.name].level = data.level
+	players[data.name]["xp rank"] = data["xp rank"]
+	players[data.name].endlevel = tonumber(data.level) >= 100 and true or false
 	players[data.name].in_alliance = table.contains(ally_orgs, data.city) and true or false
 	players[data.name].ally = table.contains(ally_orgs, data.city) and true or false
 
