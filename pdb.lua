@@ -74,7 +74,7 @@ end
 
 is_endlevel = function (self, name)
 	local name = name:title()
-	return pdb.players[name].demigod == true and true or false
+	return pdb.players[name].endlevel == true and true or false
 end
 
 in_alliance = function (self, name)

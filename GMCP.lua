@@ -57,6 +57,49 @@ function parse_vitals()
 			willpower = math.floor((gmcp.Char.Vitals.wp / gmcp.Char.Vitals.maxwp) * 100)
 		}
 	}
+
+
+	if gmcp.Char.Vitals.prone == "1" then
+		if not affs:has("prone") then
+			tmp.last_stance = tmp.vitals.last.stance
+		end
+
+		affs:add("prone", true)
+	else
+		if affs:has("prone") then
+			affs:remove("prone", true) 
+		end
+		
+		tmp.last_stance = nil
+	end
+
+	if gmcp.Char.Vitals.blind == "1" then 
+		defs:add("blindness", true)
+		affs.blindness = false
+	else
+		defs:remove("blindness", true) 
+	end
+
+	if gmcp.Char.Vitals.deaf == "1" then
+		defs:add("deafness", true)
+		affs.deafness = false
+	else
+		defs:remove("deafness", true)
+	end
+	
+	if gmcp.Char.Vitals.fangbarrier == "1" and not ps.limiters.fangbarrier then 
+		defs:add("fangbarrier", true)
+		affs.fangbarrier = false
+	else 
+		defs:remove("fangbarrier", true)
+	end
+	
+	if gmcp.Char.Vitals.cloak == "1" then
+		defs:add("cloak", true)
+		affs.cloak = false
+	else
+		defs:remove("cloak", true)
+	end
 end
 
 
@@ -83,32 +126,6 @@ function populate_skill_tree()
 		core.skills[group] = list
 		raiseEvent("gmcp skills done", group)
 	end
-end
-
-
-function got_affliction()
-local aff = "none" 
-if not gmcp.Char.Afflictions.Add then return end
-
-aff = gmcp.Char.Afflictions.Add.name
-
-if aff == "sprawled" then aff = "prone" end
-
-	e:got_aff(gmcp.Char.Afflictions.Add.name)
-	raiseEvent("source got aff", gmcp.Char.Afflictions.Add.name)
-end
-
-
-function cured_affliction()
-local aff = "none" 
-if not gmcp.Char.Afflictions.Remove then return end
-
-aff = gmcp.Char.Afflictions.Remove[1]
-
-if aff == "sprawled" then aff = "prone" end
-
-	e:cured_aff(gmcp.Char.Afflictions.Remove[1])
-	raiseEvent("source cured aff", gmcp.Char.Afflictions.Remove[1])
 end
 
 
