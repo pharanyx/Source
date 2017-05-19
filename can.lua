@@ -68,7 +68,7 @@ focus = function ()
 	return core.bals.focus
 		and not core:fscheck("focus")
 	 	and not core.systems.bashing
-		and gmcp:has_skill("Focusing")
+		and GMCP:has_skill("Focusing")
 		and not affs:has("impatience")
 		and not affs:has("asleep")
 end
@@ -173,7 +173,7 @@ end
 
 shrug = function ()
 	return core.bals.shrug
-		and gmcp:has_skill("Shrugging")
+		and GMCP:has_skill("Shrugging")
 		and not affs:has("stunned")
 		and not affs:has("asleep")
 		and not affs:has("frozen")
@@ -192,9 +192,9 @@ parry = function ()
 		and not affs:has("stun")
 		and not affs:has("tangle")()
 		and (
-			gmcp:has_skill("Parrying")
-			or gmcp:has_skill("Pawguard")
-			 or gmcp:has_skill("Guarding")
+			GMCP:has_skill("Parrying")
+			or GMCP:has_skill("Pawguard")
+			 or GMCP:has_skill("Guarding")
 		)
 end
 
@@ -219,7 +219,7 @@ target = function ()
 end
 
 mount = function ()
-	return gmcp:has_skill("Quickmounting")
+	return GMCP:has_skill("Quickmounting")
 		and core.settings.entities.horse ~= "0"
 		and not core.defs.active.shapeshifter  
 		and core.vitals.class ~= "monk" and core.vitals.class ~= "zealot"
