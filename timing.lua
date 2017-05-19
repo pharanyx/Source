@@ -38,7 +38,7 @@ end
 
 function time_diff(start, stop)
 	local diff = stop - start
-	local outstring = ""
+	local out = ""
 
 	if numeric then
 		return diff
@@ -55,12 +55,12 @@ function time_diff(start, stop)
 
 	local msec = diff
 
-	outstring = ""
+	out = ""
 
-	if hours > 0 then outstring = outstring .. hours .. " hr " end
-	if min > 0 then outstring = outstring .. min .. " min " end
-	if sec > 0 then outstring = outstring .. sec .. " sec " end
-	if msec > 0 then outstring = outstring .. msec .. " ms " end
+	if hours > 0 then out = out .. hours .. " hr " end
+	if min > 0 then out = out .. min .. " min " end
+	if sec > 0 then out = out .. sec .. " sec " end
+	if msec > 0 then out = out .. msec .. " ms " end
 
-	return outstring:gsub(".$", "")
+	return out:gsub(".$", "")
 end
