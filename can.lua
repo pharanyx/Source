@@ -1,7 +1,7 @@
 module("can", package.seeall)
 
 
--- Can we do an action, or can't we?
+-- Project Source can module. Can we do it, OR CAN'T WE?!?
 
 
 cure = function ()

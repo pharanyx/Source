@@ -1,7 +1,7 @@
 module("pdb", package.seeall)
 
 
--- Project Source player database tracking
+-- Project Source player tracking database
 
 schema = {
 	class = "unset",
