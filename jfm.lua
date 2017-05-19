@@ -1,7 +1,7 @@
 module("jfm", package.seeall)
 
 
--- Jagged Combat & Utility System
+-- Project Source Combat & Utility System
 -- Project Start Date: 14th May 2017
 
 -- Main System Module
@@ -9,7 +9,7 @@ module("jfm", package.seeall)
 
 -- Load system modules
 
-function loadSystemModules()
+function load_system_modules()
 
 	local path = package.path
 	local cpath = package.cpath
@@ -44,4 +44,4 @@ function loadSystemModules()
 end
 
 
-loadSystemModules()
+load_system_modules()

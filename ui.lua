@@ -33,7 +33,7 @@ for r, p in pairs(f) do
 	if l > tonumber(r) then
 		i = i + 1
 	else
-		core.font_size = "10px"
+		core.font_size = p
 		break
 	end
 end
@@ -163,7 +163,7 @@ end
 
 -- Colourful Event Echoes
 
-function combatEcho(self, text, colour, width)
+function combat_echo(self, text, colour, width)
 	if not text then
 		text = tostring(text)
 		if not text then
@@ -216,7 +216,7 @@ function oecho(self, txt, colour, pleft)
 end
 
 
-function createLineGradient(self, left, width)
+function create_ine_gradient(self, left, width)
 	local hex = left and "1" or "a"
 	local width = width or 10
 	local gradient = ""
@@ -241,7 +241,7 @@ function createLineGradient(self, left, width)
 end
 
 
-function eventLabel(self, text, duration)
+function event_label(self, text, duration)
 	local width, height = getMainWindowSize()
 	local strLen = text:len()
 	local label = randomstring(8, "%l%d")
@@ -278,7 +278,7 @@ function eventLabel(self, text, duration)
 end
 
 
-function eventLabelLoop()
+function event_label_loop()
 	if not tmp.labels then return end
 	local to_hide = {}
 	local need_redraw = false
@@ -332,7 +332,7 @@ end
 
 -- Update Statusbar Loop Timer Function
 
-function updateStatusbar()
+function update_statusbar()
 	if not gmcp.Char then return end
 	local out = [[
 		<p style="font-size: ]] .. core.font_size .. 
@@ -351,7 +351,7 @@ function updateStatusbar()
 	labels.status:echo(out)
 end
 
-function updateHeader()
+function update_header()
 	if not gmcp.Char then return end
 	local out = [[
 		<p style="font-size: ]] .. core.font_size .. 

@@ -1,7 +1,7 @@
 module("affs", package.seeall)
 
 
--- Jagged Affliction Handling
+-- Project Source Affliction Handling
 
 current = {}
 

@@ -1,7 +1,7 @@
 module("core", package.seeall)
 
 
--- Jagged Core System Functions
+-- Project Source Core System Functions
 
 
 -- Core System Variables
