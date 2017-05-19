@@ -174,7 +174,7 @@ end
 shrug = function ()
 	return core.bals.shrug
 		and gmcp:has_skill("Shrugging")
-		and not affs:has("stunnded")
+		and not affs:has("stunned")
 		and not affs:has("asleep")
 		and not affs:has("frozen")
 		and not affs:has("petrified")
