@@ -51,7 +51,7 @@ function stop()
 </html>]]
 
 
-  local logfile = getMudletHomeDir().."/"..os.date.."-log.html"
+  local logfile = getMudletHomeDir().."/"..os.date().."-log.html"
   local file_output = io.open(logfile, "w")
 
 
@@ -79,7 +79,7 @@ function stop()
   openUrl(location)
 
   current_data = nil
-  inbetween = nil
+  log.inbetween = nil
   if trig then killTrigger(trig) end
   trig = nil
 
@@ -115,14 +115,14 @@ function showlabel()
 end
 
 function recordline()
-  inbetween[#inbetween+1] = recordcurrentline()
+  log.inbetween[#log.inbetween+1] = recordcurrentline()
 
   if isPrompt() then
-    for i = 1, #inbetween do
-      current_data[#current_data+1] = string.format([[<div id="%d" class="log tnc_default"><p>%s</p></div>]], getStopWatchTime(recording_stopwatch)*1000, string.gsub(inbetween[i], '\n', '<br/>'))
+    for i = 1, #log.inbetween do
+      current_data[#current_data+1] = string.format([[<div id="%d" class="log tnc_default"><p>%s</p></div>]], getStopWatchTime(recording_stopwatch)*1000, string.gsub(log.inbetween[i], '\n', '<br/>'))
     end
 
-    inbetween = {}
+    log.inbetween = {}
   end
 end
 
@@ -444,7 +444,7 @@ current_data = {[[
 <div id="log" class="tnc_default">
 ]]}
 
-inbetween = {}
+log.inbetween = {}
 
 --enableTrigger("Capture each line")
 --enableTrigger("Record on the prompt")

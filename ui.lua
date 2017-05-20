@@ -21,8 +21,8 @@ local f = {
 	["3841"] = "24px",
 	["2561"] = "18px",
 	["1921"] = "16px",
-	["1601"] = "13px",
-	["1361"] = "12px",
+	["1601"] = "12px",
+	["1361"] = "11px",
 	["801"]  = "10px",
 	["641"]  = "8px"
 }
@@ -42,8 +42,8 @@ end
 default_css = [[
 	QLabel{
     	background-color: #232629;
-    	padding: 5px;
-    	border-style: inset;
+    	padding: 1px;
+    	border-style: solid;
     	border: 1px solid #31363b;
     	border-radius: 9px;
     	color: #eff0f1;
@@ -51,8 +51,8 @@ default_css = [[
 
 	QLabel::hover{
    		background-color: #232629;
-   		padding: 5px;
-   		border-style: inset;
+   		padding: 1px;
+   		border-style: solid;
    		border: 1px solid #3daee9;
    		border-radius: 9px;
    		color: #eff0f1;
@@ -63,8 +63,8 @@ default_css = [[
 
 -- Container & Label Definitions
 
-local containers = {}
-local labels = {}
+containers = {}
+labels = {}
 
 
 -- Draw Containers
@@ -112,6 +112,7 @@ labels.header = Geyser.Label:new({
 		[[; font-family: ']] .. core.ui_font .. 
 		[[';"><b><font color="brown">> Project Source v<font color="aquamarine">]] .. core.version ..
 		[[ <font color="brown">  |   Name:<font color="aquamarine"> ]] .. "..." .. 
+		[[ <font color="brown">  |   City:<font color="aquamarine"> ]] .. "..." .. 
 		[[<font color="brown">   |   House:<font color="aquamarine"> ]] .. "..." .. 
 		[[</font></p>
 	]]
@@ -339,10 +340,10 @@ function update_statusbar()
 		[[; font-family: ']] .. core.ui_font .. 
 		[[';"><b><font color="brown">* Target:<font color="aquamarine"> ]] .. tmp.target .. 
 		[[ <font color="brown">  |  Status:<font color="aquamarine"> ]] .. core.state .. 
-		[[<font color="brown"> |  Level:<font color="aquamarine"> ]] .. commaValue(gmcp.Char.Status.level) .. 
+		[[<font color="brown"> |  Level:<font color="aquamarine"> ]] .. comma_value(gmcp.Char.Status.level) .. 
 		[[ <font color="brown"> ]] .. tmp.extra_info .. 
-		[[ <font color="brown"> |  Gold:<font color="aquamarine"> ]] .. commaValue(gmcp.Char.Status.gold) .. 
-		[[ <font color="brown"> |  Bank:<font color="aquamarine"> ]] .. commaValue(gmcp.Char.Status.bank) .. 
+		[[ <font color="brown"> |  Gold:<font color="aquamarine"> ]] .. comma_value(gmcp.Char.Status.gold) .. 
+		[[ <font color="brown"> |  Bank:<font color="aquamarine"> ]] .. comma_value(gmcp.Char.Status.bank) .. 
 		[[<font color="brown"> |  Messages:<font color="aquamarine"> ]] .. gmcp.Char.Status.unread_msgs .. 
 		[[<font color="brown"> |  Unread News Count:<font color="aquamarine"> ]] .. gmcp.Char.Status.unread_news .. 
 		[[</font></p>
@@ -358,6 +359,7 @@ function update_header()
 		[[; font-family: ']] .. core.ui_font .. 
 		[[';"><b><font color="brown">> Project Source v<font color="aquamarine">]] .. core.version ..
 		[[ <font color="brown">  |   Name:<font color="aquamarine"> ]] .. gmcp.Char.Status.name .. 
+		[[ <font color="brown">  |   City:<font color="aquamarine"> ]] .. gmcp.Char.Status.city .. 
 		[[<font color="brown">   |   Class:<font color="aquamarine"> ]] .. gmcp.Char.Status.class .. 
 		[[</font></p>
 	]]
@@ -398,7 +400,7 @@ elements.chat.config.Alltab = "All"
 elements.chat.config.blink = true
 elements.chat.config.blinkTime = 3
 elements.chat.config.blinkFromAll = false
-elements.chat.config.fontSize = 9
+elements.chat.config.font_size = 9
 elements.chat.config.preserveBackground = false
 elements.chat.config.gag = false
 elements.chat.config.lines = 15
@@ -440,8 +442,8 @@ function elements.chatSwitch(chat)
     elements.chat.tabs[oldchat]:setStyleSheet([[
 			QLabel{
     background-color: #232629;
-    padding: 5px;
-    border-style: inset;
+    padding: 1px;
+    border-style: solid;
     border: 1px solid #76797C;
     border-radius: 9px;
     color: #eff0f1;
@@ -449,8 +451,8 @@ function elements.chatSwitch(chat)
 
 			QLabel::hover{
     background-color: #232629;
-    padding: 5px;
-    border-style: inset;
+    padding: 1px;
+    border-style: solid;
     border: 1px solid #3daee9;
     border-radius: 2px;
     color: #eff0f1;
@@ -468,8 +470,8 @@ function elements.chatSwitch(chat)
   elements.chat.tabs[chat]:setStyleSheet([[
 		QLabel{
     background-color: #232629;
-    padding: 5px;
-    border-style: inset;
+    padding: 1px;
+    border-style: solid;
     border: 1px solid #76797C;
     border-radius: 9px;
     color: #eff0f1;
@@ -477,8 +479,8 @@ function elements.chatSwitch(chat)
 
 		QLabel::hover{
     background-color: #232629;
-    padding: 5px;
-    border-style: inset;
+    padding: 1px;
+    border-style: solid;
     border: 1px solid #3daee9;
     border-radius: 9px;
     color: #eff0f1;
@@ -490,14 +492,24 @@ function elements.chatSwitch(chat)
 end
 
 function elements.chat:resetUI()
-  elements.chat.container = Geyser.Container:new(elements.chat[elements.chat.config.location]())
+  --elements.chat.container = Geyser.Container:new(elements.chat[elements.chat.config.location](), ui.containers.chat)
+	elements.chat.container = Geyser.Container:new({
+		font_size = elements.chat.config.font_size,
+		--x = string.format("-%sc",elements.chat.config.width + 2),
+		x = 0,
+		y = 0,
+		--width = "-15px",
+		width = "100%",
+		height = string.format("%ic", elements.chat.config.lines + 2),
+	}, containers.chat)
+  
   elements.chat.tabBox = Geyser.HBox:new({
     x=0,
     y=0,
     width = "100%",
     height = "8%",
     name = "DemonChatTabs",
-  },elements.chat.container)
+  }, elements.chat.container)
 
 end
 
@@ -522,8 +534,8 @@ function elements.chat:create()
     elements.chat.tabs[tab]:setStyleSheet([[
 			QLabel{
     background-color: #232629;
-    padding: 5px;
-    border-style: inset;
+    padding: 1px;
+    border-style: solid;
     border: 1px solid #76797C;
     border-radius: 9px;
     color: #eff0f1;
@@ -531,8 +543,8 @@ function elements.chat:create()
 
 			QLabel::hover{
     background-color: #232629;
-    padding: 5px;
-    border-style: inset;
+    padding: 1px;
+    border-style: solid;
     border: 1px solid #3daee9;
     border-radius: 9px;
     color: #eff0f1;
@@ -540,14 +552,14 @@ function elements.chat:create()
 		]])
     elements.chat.tabs[tab]:setClickCallback("ui.elements.chatSwitch", tab)
     elements.chat.windows[tab] = Geyser.MiniConsole:new({
---      fontSize = elements.chat.config.fontSize,
+--      font_size = elements.chat.config.font_size,
       x = 0,
       y = "9%",
       height = "100%",
       width = "100%",
       name = string.format("win%s", tab),
     }, elements.chat.container)
-    elements.chat.windows[tab]:setFontSize(elements.chat.config.fontSize)
+    elements.chat.windows[tab]:setFontSize(elements.chat.config.font_size)
     elements.chat.windows[tab]:setColor(winr,wing,winb)
     elements.chat.windows[tab]:setWrap(elements.chat.config.width)
     elements.chat.windows[tab]:hide()
@@ -630,7 +642,7 @@ end
 
 function elements.chat:topright()
   return {
-    fontSize = elements.chat.config.fontSize,
+    font_size = elements.chat.config.font_size,
     x=string.format("-%sc",elements.chat.config.width + 2),
     y=0,
     width="-15px",
@@ -640,7 +652,7 @@ end
 
 function elements.chat:topleft()
   return {
-    fontSize = elements.chat.config.fontSize,
+    font_size = elements.chat.config.font_size,
     x=0,
     y=0,
     width=string.format("%sc",elements.chat.config.width),
@@ -650,7 +662,7 @@ end
 
 function elements.chat:bottomright()
   return {
-    fontSize = elements.chat.config.fontSize,
+    font_size = elements.chat.config.font_size,
     x=string.format("-%sc",elements.chat.config.width + 2),
     y=string.format("-%sc",elements.chat.config.lines + 2),
     width="-15px",
@@ -660,7 +672,7 @@ end
 
 function elements.chat:bottomleft()
   return {
-    fontSize = elements.chat.config.fontSize,
+    font_size = elements.chat.config.font_size,
     x=0,
     y=string.format("-%sc",elements.chat.config.lines + 2),
     width=string.format("%sc",elements.chat.config.width),
