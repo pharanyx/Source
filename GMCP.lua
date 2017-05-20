@@ -168,7 +168,8 @@ function check_channels()
       ["Web"] = "Combat",
       ["tell"] = "Tells",
       ["says"] = "Misc",
-      ["ot"] = "Misc"
+      ["ot"] = "Misc",
+      ["emotes"] = "Misc"
    }
 end
 
