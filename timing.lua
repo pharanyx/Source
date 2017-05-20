@@ -6,7 +6,7 @@ module("timing", package.seeall)
 function start(self, key)
 	local time = getTime()
 	
-	ps.ps.timers.sets[key] = os_time()
+	ps.timers.sets[key] = os_time()
 end
 
 
