@@ -128,9 +128,6 @@ function populate_skill_tree()
 	end
 end
 
-
-local ansiPattern = rex.new("\\e\\[(\\d+;)*\\d+m")
-local mxpPattern  = rex.new("\\e\\[4z\\x3\.+?\\x4")
  
 function start_chat_record()
     local text = gmcp.Comm.Channel.Text.text
@@ -139,7 +136,7 @@ function start_chat_record()
     --decho(text)
 end
  
-registerAnonymousEventHandler("gmcp.Comm.Channel.Text", "start_chat_record")
+--registerAnonymousEventHandler("gmcp.Comm.Channel.Text", "start_chat_record")
 
 
 function chat_capture()
@@ -165,6 +162,7 @@ function check_channels()
       ["gt"] = "Guild", 
       ["gts"] = "Guild",
       ["clt"] = "Clans",
+      ["cnt"] = "City",
       ["Web"] = "Combat",
       ["tell"] = "Tells",
       ["says"] = "Misc",
