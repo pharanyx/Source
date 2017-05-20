@@ -6,7 +6,7 @@ module("genrun", package.seeall)
 
 function init()
 	timing:start("genrun plot time")
-	jfm.echo("Genrunner plotting: " .. getRoomAreaName(getRoomArea(mmp.currentroom)) .. "...")
+	ps.echo("Genrunner plotting: " .. getRoomAreaName(getRoomArea(mmp.currentroom)) .. "...")
 	local r = getAreaRooms(getRoomArea(mmp.currentroom))
 	rooms = {}
 	reverse_path = {}
@@ -38,7 +38,7 @@ function init()
 		end
 	end
 
-	jfm.echo("Parsed " .. counttable(rooms_left_to_touch) .. " rooms. (Took " .. timing:stop("genrun plot time") .. ")\n")
+	ps.echo("Parsed " .. counttable(rooms_left_to_touch) .. " rooms. (Took " .. timing:stop("genrun plot time") .. ")\n")
 	raiseEvent("genrun start")
 end
 
@@ -62,7 +62,7 @@ function backtrack()
 		walking_to = table.remove(reverse_path)
 		return mmp.gotoRoom(walking_to)
 	else
-		jfm.echo("Genrun this area has been completed.")
+		ps.echo("Genrun this area has been completed.")
 		raiseEvent("genrun completed")
 	end
 end
@@ -76,7 +76,7 @@ function stop()
 	backtracking = false
 	raiseEvent("genrun stop")
 	if config.return_to_start then
-		jfm.echo("Returning you to your starting room!")
+		ps.echo("Returning you to your starting room!")
 		mmp.gotoRoom(starting_room)
 	end
 end

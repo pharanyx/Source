@@ -16,11 +16,11 @@ function set_target(self, target)
 	tmp.mark_target = tempTrigger(tmp.target, [[selectString("]] .. tmp.target .. [[", 1) bg("firebrick") fg("white") resetFormat()]])
 
 	if tmp.leadermode then
-		jfm.to_channel("Target: " .. tmp.target)
-		jfm.to_channel("Target: " .. tmp.target)
-		jfm.to_channel("Target: " .. tmp.target)
+		ps.to_channel("Target: " .. tmp.target)
+		ps.to_channel("Target: " .. tmp.target)
+		ps.to_channel("Target: " .. tmp.target)
 	else
-		jfm.to_channel("Targeting: " .. tmp.target)
+		ps.to_channel("Targeting: " .. tmp.target)
 	end
 
 	ui:update_statusbar()

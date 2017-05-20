@@ -19,7 +19,7 @@ if aff == "sprawled" then aff = "prone" end
 		attempt_cure = 0 
 	}
 	
-	jfm.got_aff(gmcp.Char.Afflictions.Add.name)
+	ps.got_aff(gmcp.Char.Afflictions.Add.name)
 	raiseEvent("source got aff", gmcp.Char.Afflictions.Add.name)
 end
 
@@ -33,7 +33,7 @@ aff = gmcp.Char.Afflictions.Remove[1]
 if aff == "sprawled" then aff = "prone" end
 
 	current[aff] = nil
-	jfm.cured_aff(gmcp.Char.Afflictions.Remove[1])
+	ps.cured_aff(gmcp.Char.Afflictions.Remove[1])
 	raiseEvent("source cured aff", gmcp.Char.Afflictions.Remove[1])
 end
 

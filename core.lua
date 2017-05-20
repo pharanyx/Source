@@ -61,7 +61,7 @@ queue = priority_queue()
 
 function send_prio(self, command, priority)
 	prio = priority or 100
-	jfm.echo("Added '" .. command:upper() .. "' with a priority of: " .. prio..".")
+	ps.echo("Added '" .. command:upper() .. "' with a priority of: " .. prio..".")
 	queue:push(command, prio)
 end
 
