@@ -21,10 +21,10 @@ local f = {
 	["3841"] = "24px",
 	["2561"] = "18px",
 	["1921"] = "16px",
-	["1601"] = "12px",
-	["1361"] = "11px",
-	["801"]  = "10px",
-	["641"]  = "8px"
+	["1601"] = "10px",
+	["1361"] = "9px",
+	["801"]  = "8px",
+	["641"]  = "7px"
 }
 
 local i = 1
@@ -507,8 +507,8 @@ function elements.chat:resetUI()
     x=0,
     y=0,
     width = "100%",
-    height = "8%",
-    name = "DemonChatTabs",
+    height = "10%",
+    name = "comms_tabs",
   }, elements.chat.container)
 
 end
@@ -554,7 +554,7 @@ function elements.chat:create()
     elements.chat.windows[tab] = Geyser.MiniConsole:new({
 --      font_size = elements.chat.config.font_size,
       x = 0,
-      y = "9%",
+      y = "10%",
       height = "100%",
       width = "100%",
       name = string.format("win%s", tab),

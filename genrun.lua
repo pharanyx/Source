@@ -38,8 +38,8 @@ function init()
 		end
 	end
 
-	ps.echo("Parsed " .. counttable(rooms_left_to_touch) .. " rooms. (Took " .. timing:stop("genrun plot time") .. ")\n")
-	raiseEvent("genrun start")
+	ps.echo("Parsed " .. table.length(rooms_left_to_touch) .. " rooms. (Took " .. timing:stop("genrun plot time") .. ")\n")
+	raiseEvent("source genrun start")
 end
 
 
@@ -62,8 +62,8 @@ function backtrack()
 		walking_to = table.remove(reverse_path)
 		return mmp.gotoRoom(walking_to)
 	else
-		ps.echo("Genrun this area has been completed.")
-		raiseEvent("genrun completed")
+		ps.echo("Genrun for this area has been completed.")
+		raiseEvent("source genrun completed")
 	end
 end
 
@@ -82,10 +82,10 @@ function stop()
 end
 
 
-function genrun_walk()
+function continue()
 	walking = true
 	for name, number in pairs(tmp.roomitems) do
-		local items_to_pickup = { "sovereigns", "shard", "essence", "cocoon", "fragment" }
+		local items_to_pickup = { "sovereigns", "shard", "essence" }
 		for _, i in ipairs(items_to_pickup) do
 			if name:find(i) then
 				send("get " .. i)
@@ -97,7 +97,7 @@ function genrun_walk()
 end
 
 
-function genrun_look()
+function arrived()
 	local vnum = gmcp.Room.Info.num
 	if vnum ~= walking_to then
 		return
@@ -107,6 +107,6 @@ function genrun_look()
 	else
 		rooms_left_to_touch[vnum] = nil
 	end
-	raiseEvent("genrun arrived")
+	raiseEvent("source genrun arrived")
 	walking = false
 end

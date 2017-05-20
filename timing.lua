@@ -6,7 +6,7 @@ module("timing", package.seeall)
 function start(self, key)
 	local time = getTime()
 	
-	timers.sets[key] = os_time()
+	ps.ps.timers.sets[key] = os_time()
 end
 
 
@@ -21,18 +21,18 @@ end
 
 
 function stop(self, key, numeric)
-	if timers.sets[key] == nil then
+	if ps.timers.sets[key] == nil then
 		return numeric and 0 or "ERR"
 	end
 
 	local time = os_time()
-	local diff = time - timers.sets[key]
+	local diff = time - ps.timers.sets[key]
 
 	if numeric then
 		return diff
 	end
 
-	return time_diff(timers.sets[key], time)
+	return time_diff(ps.timers.sets[key], time)
 end
 
 

@@ -69,8 +69,13 @@ function prompt()
 	raiseEvent("act")
 	while not queue:isempty() do
 		local command = queue:pop()
-		send(command)
+
+        if type(command) == "function" then
+            _G[command]()
+        else
+		  send(command)
+        end
 	end
 end
 
-registerAnonymousEventHandler("prompt_received", "core.prompt")
+registerAnonymousEventHandler("prompt received", "core.prompt")
