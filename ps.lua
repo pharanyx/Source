@@ -41,6 +41,8 @@ function load_system_modules()
 
 	package.path = path
 	package.cpath = cpath
+
+	raiseEvent("source done loading")
 end
 
 

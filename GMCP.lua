@@ -129,6 +129,50 @@ function populate_skill_tree()
 end
 
 
+local ansiPattern = rex.new("\\e\\[(\\d+;)*\\d+m")
+local mxpPattern  = rex.new("\\e\\[4z\\x3\.+?\\x4")
+ 
+function start_chat_record()
+    local text = gmcp.Comm.Channel.Text.text
+    text = ansi2decho(text)
+    text = rex.gsub(text, mxpPattern, "")
+    --decho(text)
+end
+ 
+registerAnonymousEventHandler("gmcp.Comm.Channel.Text", "start_chat_record")
+
+
+function chat_capture()
+   local ch = gmcp.Comm.Channel.Start
+   if not chat_channels then check_channels() end
+   chat_channels.last = "Misc"
+   for c, t in pairs(chat_channels.types) do
+      if ch:find(c) then
+         chat_channels.last = t
+         break
+      end
+   end
+   enableTrigger("comms capture")
+end
+
+function check_channels()
+   chat_channels = chat_channels or {}
+   chat_channels.last = chat_channels.last or ""
+   chat_channels.types = {
+      ["newbie"] = "Misc",
+      ["market"] = "Misc",
+      ["ct"] = "City",
+      ["gt"] = "Guild", 
+      ["gts"] = "Guild",
+      ["clt"] = "Clans",
+      ["Web"] = "Combat",
+      ["tell"] = "Tells",
+      ["says"] = "Misc",
+      ["ot"] = "Misc"
+   }
+end
+
+
 function has_skill(group, skill)
 	return true
 end
