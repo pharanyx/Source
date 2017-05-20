@@ -15,6 +15,7 @@ schema = {
 	fullname ="unset",
 	xp_rank = "unset",
 	race = "unset",
+	age = "unset",
 	in_alliance = false,
 	in_area = false,
 	in_room = false,
