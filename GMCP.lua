@@ -172,6 +172,118 @@ function check_channels()
 end
 
 
+-- Items handling; both room and inv,
+
+items = {}
+
+function items:Add(event)
+   local location = gmcp.Char.Items.Add.location
+   if location ~= "inv" and location ~= "room" then
+      location = location:match("%d+$")
+   end
+   local loc = location .. "_items"
+   local item = {}
+   for x,y in pairs(gmcp.Char.Items.Add.item) do 
+      item[x] = y
+   end
+   if not self[loc] then
+      sendGMCP("Char.Items.Inv")
+      return
+   end
+   table.insert(self[loc], gmcp.Char.Items.Add.item)
+   if loc == "inv_items" and item.attrib and item.attrib:find("c") then
+      sendGMCP("Char.Items.Contents "..item.id)
+   end
+   return "source gmcp items add", location
+end
+
+function items:Remove()
+   local location = gmcp.Char.Items.Remove.location
+   if location ~= "inv" and location ~= "room" then
+      location = location:match("%d+$")
+   end
+   local loc = location .. "_items"
+   if not self[loc] then
+      sendGMCP("Char.Items.Inv")
+      return
+   end
+   for k,v in pairs(self[loc]) do
+      if v.id == gmcp.Char.Items.Remove.item.id then
+         table.remove(self[loc], k)
+         break
+      end
+   end
+   return "source gmcp items remove", location
+end
+
+
+function items:List()
+   local location = gmcp.Char.Items.List.location
+   if location ~= "inv" and location ~= "room" then
+      location = location:match("%d+$")
+   end
+   local loc = location .. "_items"
+   self[loc] = {}
+   for k,v in pairs(gmcp.Char.Items.List.items) do
+      local item = {}
+      for x,y in pairs(v) do 
+        item[x] = y
+      end
+      table.insert(self[loc], item)
+      if loc == "inv_items" and v.attrib and v.attrib:find("c") then
+         sendGMCP("Char.Items.Contents "..v.id)
+      end
+   end
+   return "source gmcp items list", location
+end
+
+
+function items:Update()
+   local location = gmcp.Char.Items.Update.location
+   if location ~= "inv" and location ~= "room" then
+      location = location:match("%d+$")
+   end
+   local loc = location .. "_items"
+   local item = gmcp.Char.Items.Update.item
+   local updated
+      if not self[loc] then
+      sendGMCP("Char.Items.Inv")
+      return
+   end
+   for k,v in pairs(self[loc]) do
+      if v.id == item.id then
+         local item = {}
+         for x,y in pairs(v) do 
+            item[x] = y
+         end
+         self[loc][k] = item
+         updated = true
+         break
+      end
+   end
+   if loc == "inv_items" and not updated then sendGMCP("Char.Items.Inv") end
+   if loc == "inv_items" and item.attrib and item.attrib:find("c") then
+      sendGMCP("Char.Items.Contents "..item.id)
+   end
+   return "source gmcp items update", location
+end
+
+function items:StatusVars()
+   self.inv_items = {}
+   self.room_items = {}
+   sendGMCP("Char.Items.Inv")
+   send("ql",false)
+end
+
+function items_event(self, event)
+	local event = event:match("%w+$")
+	local func = loadstring("return GMCP.items:"..event.."()")
+	local x, y = func()
+	tmp.invitems = GMCP.items.inv_items
+	tmp.roomitems = GMCP.items.room_items
+	if x then raiseEvent(x,y) end
+end
+
 function has_skill(group, skill)
 	return true
 end
