@@ -6,11 +6,13 @@ module("core", package.seeall)
 
 -- Core System Variables
 
+bals = {}
 font_size = "12px"
 realm = "Aetolia"
 state = "Active"
 ui_font = "Hack"
 version = "0.9.1"
+vitals = {}
 
 -- Priority queue
 
@@ -78,4 +80,34 @@ function prompt()
 	end
 end
 
-registerAnonymousEventHandler("prompt received", "core.prompt")
+registerAnonymousEventHandler("source prompt received", "core.prompt")
+
+
+-- Failsafe Timing Functions
+
+function fson(self, key, time)    
+    if ps.timers[key] then
+        killTimer(ps.timers[key])
+    end
+    
+    ps.limiters[key] = true
+    local delay = time or 0.5
+    if ps.flags.aeon then
+        delay = delay + 1.5
+    end
+    ps.timers[key] = tempTimer(delay, [[core:fsoff("]]..key..[[")]])
+end
+
+function fsoff(self, key)
+    if ps.limiters[key] ~= nil then
+        if ps.timers[key] then
+            killTimer(ps.timers[key])
+        end
+        ps.limiters[key] = false
+        ps.timers[key] = nil
+    end
+end
+
+function fscheck(self, key)
+    return ps.limiters[key] and true or false
+end

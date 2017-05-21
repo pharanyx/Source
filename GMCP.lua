@@ -75,28 +75,28 @@ function parse_vitals()
 
 	if gmcp.Char.Vitals.blind == "1" then 
 		defs:add("blindness", true)
-		affs.blindness = false
+		affs.current.blindness = false
 	else
 		defs:remove("blindness", true) 
 	end
 
 	if gmcp.Char.Vitals.deaf == "1" then
 		defs:add("deafness", true)
-		affs.deafness = false
+		affs.current.deafness = false
 	else
 		defs:remove("deafness", true)
 	end
 	
-	if gmcp.Char.Vitals.fangbarrier == "1" and not ps.limiters.fangbarrier then 
+	if gmcp.Char.Vitals.fangbarrier == "1" and not core:fscheck("fangbarrier") then 
 		defs:add("fangbarrier", true)
-		affs.fangbarrier = false
+		affs.current.fangbarrier = false
 	else 
 		defs:remove("fangbarrier", true)
 	end
 	
 	if gmcp.Char.Vitals.cloak == "1" then
 		defs:add("cloak", true)
-		affs.cloak = false
+		affs.current.cloak = false
 	else
 		defs:remove("cloak", true)
 	end
@@ -183,7 +183,7 @@ function items:Add(event)
    end
    local loc = location .. "_items"
    local item = {}
-   for x,y in pairs(gmcp.Char.Items.Add.item) do 
+   for x, y in pairs(gmcp.Char.Items.Add.item) do 
       item[x] = y
    end
    if not self[loc] then
@@ -207,7 +207,7 @@ function items:Remove()
       sendGMCP("Char.Items.Inv")
       return
    end
-   for k,v in pairs(self[loc]) do
+   for k, v in pairs(self[loc]) do
       if v.id == gmcp.Char.Items.Remove.item.id then
          table.remove(self[loc], k)
          break
@@ -224,9 +224,9 @@ function items:List()
    end
    local loc = location .. "_items"
    self[loc] = {}
-   for k,v in pairs(gmcp.Char.Items.List.items) do
+   for k, v in pairs(gmcp.Char.Items.List.items) do
       local item = {}
-      for x,y in pairs(v) do 
+      for x, y in pairs(v) do 
         item[x] = y
       end
       table.insert(self[loc], item)
@@ -250,10 +250,10 @@ function items:Update()
       sendGMCP("Char.Items.Inv")
       return
    end
-   for k,v in pairs(self[loc]) do
+   for k, v in pairs(self[loc]) do
       if v.id == item.id then
          local item = {}
-         for x,y in pairs(v) do 
+         for x, y in pairs(v) do 
             item[x] = y
          end
          self[loc][k] = item
@@ -272,7 +272,7 @@ function items:StatusVars()
    self.inv_items = {}
    self.room_items = {}
    sendGMCP("Char.Items.Inv")
-   send("ql",false)
+   send("ql", false)
 end
 
 function items_event(self, event)
@@ -281,7 +281,7 @@ function items_event(self, event)
 	local x, y = func()
 	tmp.invitems = GMCP.items.inv_items
 	tmp.roomitems = GMCP.items.room_items
-	if x then raiseEvent(x,y) end
+	if x then raiseEvent(x, y) end
 end
 
 function has_skill(group, skill)

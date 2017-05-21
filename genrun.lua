@@ -3,13 +3,22 @@ module("genrun", package.seeall)
 
 -- Genrunner. Be careful :)
 
+config = {}
 
-function init()
+function init(self, rs)
+	if rs and type(rs) ~= "boolean" then
+		ps.error("genrun:init() error. Supplied argument must be a boolean.")
+		return
+	end
+
 	timing:start("genrun plot time")
 	ps.echo("Genrunner plotting: " .. getRoomAreaName(getRoomArea(mmp.currentroom)) .. "...")
+	
 	local r = getAreaRooms(getRoomArea(mmp.currentroom))
+	
 	rooms = {}
 	reverse_path = {}
+	
 	for _, vnum in ipairs(r) do
 		if getPath(mmp.currentroom, vnum) then
 			rooms[vnum] = {}
@@ -23,7 +32,9 @@ function init()
 	end
 
 	rooms[mmp.currentroom] = {}
+	
 	local exits = getRoomExits(mmp.currentroom)
+	
 	for direction, to_room in pairs(exits) do
 		rooms[mmp.currentroom][to_room] = {
 			dir = direction,
@@ -32,6 +43,7 @@ function init()
 
 	rooms_left_to_touch = {}
 	starting_room = mmp.currentroom
+	
 	for vnum, exits in pairs(rooms) do
 		if vnum ~= starting_room then
 			rooms_left_to_touch[vnum] = true
@@ -39,6 +51,18 @@ function init()
 	end
 
 	ps.echo("Parsed " .. table.length(rooms_left_to_touch) .. " rooms. (Took " .. timing:stop("genrun plot time") .. ")\n")
+
+	local area = gmcp.Room.Info.area
+	local mobs = pve.mobs_by_area[area]
+
+	ps.echo("Detected for this run:\n")
+	ps.echo(concatand(mobs)..".\n")
+
+	ps.echo("All set! Type 'ps genrun go' to start.")
+	config.return_to_start = rs
+
+	get_rooms_for_highlight(gmcp.Room.Info.area)
+
 	raiseEvent("source genrun start")
 end
 
@@ -74,8 +98,8 @@ function stop()
 	rooms = {}
 	walking_to = 0
 	backtracking = false
-	raiseEvent("genrun stop")
-	if config.return_to_start then
+	raiseEvent("source genrun stop")
+	if genrun.config.return_to_start then
 		ps.echo("Returning you to your starting room!")
 		mmp.gotoRoom(starting_room)
 	end
@@ -84,10 +108,10 @@ end
 
 function continue()
 	walking = true
-	for name, number in pairs(tmp.roomitems) do
-		local items_to_pickup = { "sovereigns", "shard", "essence" }
+	for k, v in pairs(tmp.roomitems) do
+		local items_to_pickup = { "essence" }
 		for _, i in ipairs(items_to_pickup) do
-			if name:find(i) then
+			if v.name:find(i) then
 				send("get " .. i)
 			end
 		end
@@ -98,15 +122,26 @@ end
 
 
 function arrived()
-	local vnum = gmcp.Room.Info.num
-	if vnum ~= walking_to then
-		return
+	if next(genrun.rooms) then
+		local vnum = gmcp.Room.Info.num
+		
+		unHighlightRoom(mmp.currentroom) 
+
+		if vnum ~= walking_to then
+			return
+		end
+	
+		if backtracking then
+			backtracking = false
+		else
+			rooms_left_to_touch[vnum] = nil
+		end
+
+		raiseEvent("source genrun arrived")
+		walking = false
 	end
-	if backtracking then
-		backtracking = false
-	else
-		rooms_left_to_touch[vnum] = nil
-	end
-	raiseEvent("source genrun arrived")
-	walking = false
 end
+
+
+
+
