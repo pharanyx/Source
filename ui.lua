@@ -21,10 +21,10 @@ local f = {
 	["3841"] = "24px",
 	["2561"] = "18px",
 	["1921"] = "16px",
-	["1601"] = "10px",
-	["1361"] = "9px",
-	["801"]  = "8px",
-	["641"]  = "7px"
+	["1601"] = "11px",
+	["1361"] = "10px",
+	["801"]  = "9px",
+	["641"]  = "8px"
 }
 
 local i = 1
@@ -400,7 +400,7 @@ elements.chat.config.Alltab = "All"
 elements.chat.config.blink = true
 elements.chat.config.blinkTime = 3
 elements.chat.config.blinkFromAll = false
-elements.chat.config.font_size = 7
+elements.chat.config.font_size = 9
 elements.chat.config.preserveBackground = false
 elements.chat.config.gag = false
 elements.chat.config.lines = 15

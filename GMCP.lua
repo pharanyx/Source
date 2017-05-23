@@ -74,31 +74,31 @@ function parse_vitals()
 	end
 
 	if gmcp.Char.Vitals.blind == "1" then 
-		defs:add("blindness", true)
+		--defs:add("blindness", true)
 		affs.current.blindness = false
 	else
-		defs:remove("blindness", true) 
+		--defs:remove("blindness", true) 
 	end
 
 	if gmcp.Char.Vitals.deaf == "1" then
-		defs:add("deafness", true)
+		--defs:add("deafness", true)
 		affs.current.deafness = false
 	else
-		defs:remove("deafness", true)
+		--defs:remove("deafness", true)
 	end
 	
 	if gmcp.Char.Vitals.fangbarrier == "1" and not core:fscheck("fangbarrier") then 
-		defs:add("fangbarrier", true)
+		--defs:add("fangbarrier", true)
 		affs.current.fangbarrier = false
 	else 
-		defs:remove("fangbarrier", true)
+		--defs:remove("fangbarrier", true)
 	end
 	
 	if gmcp.Char.Vitals.cloak == "1" then
-		defs:add("cloak", true)
+		--defs:add("cloak", true)
 		affs.current.cloak = false
 	else
-		defs:remove("cloak", true)
+		--defs:remove("cloak", true)
 	end
 end
 

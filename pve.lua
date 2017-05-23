@@ -316,6 +316,10 @@ mobs_by_area = {
 	tarean_ice_caverns = {
 	},
 
+	["The village of Bihrkaen"] ={
+		"a purple speckled dildo"
+	}
+
 	tiyen_esityi = {
 		"a crazed Nazetu cutter",
 		"the creature beneath Tiyen Esityi",

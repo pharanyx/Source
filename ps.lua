@@ -21,7 +21,7 @@ function load_system_modules()
 	package.path = string.format("%s;%s;%s;%s", path, lua_dir, init_dir, sysdir)
 	package.cpath = string.format("%s;%s;%s;%s", cpath, lua_dir, init_dir, sysdir)
 
-	local m = SYSROOT_DEFINED and { "affs", "can", "core", "defs", "genrun", "GMCP", "log", "pdb","pve", "pvp", "rc4", "ss", "timing", "ui" } or nil
+	local m = SYSROOT_DEFINED and { "affs", "can", "core", "genrun", "GMCP", "log", "pdb","pve", "pvp", "rc4", "ss", "timing", "ui" } or nil
 	for _, n in ipairs(m) do
 		_G[n] = nil
 		package.loaded[n] = nil
