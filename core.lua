@@ -61,10 +61,20 @@ setmetatable(priority_queue, priority_queue)
 
 queue = priority_queue()
 
-function send_prio(self, command, priority)
-	prio = priority or 100
-	ps.echo("Added '" .. command:upper() .. "' with a priority of: " .. prio..".")
-	queue:push(command, prio)
+function send_prio(self, command, priority, ret)
+	
+    prio = priority or 100
+    
+    if ret then
+	   ps.echo("Added '" .. command:upper() .. "' with a priority of: " .. prio..".")
+	end
+
+    if not core:fscheck("send look on queue") then
+        send("\n")
+        core:fson("send look on queue", 3)
+    end
+
+    queue:push(command, prio)
 end
 
 function prompt()
@@ -110,4 +120,23 @@ end
 
 function fscheck(self, key)
     return ps.limiters[key] and true or false
+end
+
+
+-- System tips table
+
+tips = {
+    "You can quickly and easily execute a Lua command by prepending an exclamation mark, i.e. '!display(gmcp)'",
+    "Need to be alerted of an important event? Try the system warning label feature, ui:event_label(). Takes up to two arguments, the text to display and the duration of the label in seconds",
+    "Have a line you wish to highlight? ui:combat_echo() is your friend. First argument is the text to display. Second and third aruments are optional, but define the colour and the width of the highlight. Available colours include red, blue, green, yellow, purple and orange",
+    "A full overview of the current system settings can be seen with 'ps settings show'",
+    "Create simple, unobtrusive highlights with the ui:oecho() function.",
+    "Did you know that clicking the character information component will cycle through the available themes?",
+    "Want to see the player database data for a name? Simply 'whois <name>' to view all held records.",
+    "Player database settings can be found via 'ps pdb show' - Assign alliances and set colours for a multitude of states and affiliations.",
+    
+}
+
+function show_tip()
+    local delay = tempTimer(10, [[ps.showtip(core.tips[math.random(#core.tips)])]])
 end

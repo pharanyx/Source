@@ -431,7 +431,7 @@ mobs_by_area = {
 
 
 function init()
-	--local delay = tempTimer(0.1, [[genrun_get_mobs()]])
+	local delay = tempTimer(0.1, [[pve:get_mobs()]])
 end
  
 
@@ -452,10 +452,13 @@ function get_mobs()
 		end	
 	end
 
-	--local delay = tempTimer(0.1, [[tmp.target = (next(tmp.to_bash) and table.remove(tmp.to_bash, 1) or "Nothing")]])
+	if not tmp.bash_target_acquired then
+		local delay = tempTimer(0.1, [[tmp.target = (next(tmp.to_bash) and tmp.to_bash[1] or "Nothing")]])
+		tmp.bash_target_acquired = true
+	end
 end
 
 
 function bash()
-	--local delay = tempTimer(0.5, [[send("combo "..tmp.target.." sdk ucp ucp")]])
+	local delay = tempTimer(0.1, [[send("combo "..tmp.target.." sdk ucp ucp")]])
 end

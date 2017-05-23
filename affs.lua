@@ -5,7 +5,7 @@ module("affs", package.seeall)
 
 current = {}
 
-function got()
+function add()
 local aff = "none" 
 if not gmcp.Char.Afflictions.Add then return end
 
@@ -19,7 +19,7 @@ if aff == "sprawled" then aff = "prone" end
 		attempt_cure = 0 
 	}
 	
-	ps.got_aff(gmcp.Char.Afflictions.Add.name)
+	--ps.got_aff(gmcp.Char.Afflictions.Add.name)
 	raiseEvent("source got aff", gmcp.Char.Afflictions.Add.name)
 end
 

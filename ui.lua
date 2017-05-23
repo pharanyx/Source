@@ -153,12 +153,12 @@ labels.mapper = Geyser.Mapper:new({
 
 function header(self, title, extra)
     local replen = 55 - (13 + title:len())
-    cecho("\n<firebrick>+<aquamarine>----- <firebrick>[<slate_grey> "..title:title().." <firebrick>] "..string.rep("<aquamarine>-", replen).." <firebrick>(<aquamarine> "..getTime(true, "hh:mma - dd/MM/yyyy").." <firebrick>) <aquamarine>-----<firebrick>+\n\n")
+    cecho("\n<sienna>+<burlywood>----- <sienna>[<slate_grey> "..title:title().." <sienna>] "..string.rep("<burlywood>-", replen).." <sienna>(<burlywood> "..getTime(true, "hh:mma - dd/MM/yyyy").." <sienna>) <burlywood>-----<sienna>+\n\n")
 end
 
 
 function footer()
-    cecho("\n<firebrick>+<aquamarine>"..string.rep("-", 55).."<firebrick> [<slate_grey> Source-"..core.version.." <firebrick>]<aquamarine> "..string.rep("-", 11).."<firebrick>+\n")
+    cecho("\n<sienna>+<burlywood>"..string.rep("-", 57).."<sienna> [<slate_grey> Source-"..core.version.." <sienna>]<burlywood> "..string.rep("-", 11).."<sienna>+\n")
 end
 
 
@@ -217,7 +217,7 @@ function oecho(self, txt, colour, pleft)
 end
 
 
-function create_ine_gradient(self, left, width)
+function create_line_gradient(left, width)
 	local hex = left and "1" or "a"
 	local width = width or 10
 	local gradient = ""
@@ -259,7 +259,7 @@ function event_label(self, text, duration)
 	]])
                
 	resizeWindow(label, strLen * 25, 70)
-	local tabLen, offset = counttable(tmp.labels), 100
+	local tabLen, offset = table.length(tmp.labels), 100
 	local topPos = (height / 2.0) - (tabLen * 75)
 	if topPos > 0 then
 		moveWindow(label, (width - (strLen * 25)) / 3, topPos)
@@ -400,11 +400,11 @@ elements.chat.config.Alltab = "All"
 elements.chat.config.blink = true
 elements.chat.config.blinkTime = 3
 elements.chat.config.blinkFromAll = false
-elements.chat.config.font_size = 9
+elements.chat.config.font_size = 7
 elements.chat.config.preserveBackground = false
 elements.chat.config.gag = false
 elements.chat.config.lines = 15
-elements.chat.config.width = 60
+elements.chat.config.width = 80
 elements.chat.config.activeColors = {
   r = 0,
   g = 180,

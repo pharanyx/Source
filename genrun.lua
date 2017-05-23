@@ -122,7 +122,7 @@ end
 
 
 function arrived()
-	if next(genrun.rooms) then
+	if tmp.genrun then
 		local vnum = gmcp.Room.Info.num
 		
 		unHighlightRoom(mmp.currentroom) 

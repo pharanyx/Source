@@ -33,10 +33,10 @@ function parse_vitals()
 		core.bals[key] = gmcp.Char.Vitals[key] == "1" and true or false
 
 		if core.bals[key] == true and core.bals.last[key] == false then
-			if limiters[key] ~= nil then 
+			if ps.limiters[key] ~= nil then 
 				core:fsoff(key)
 			end
-			timers.sets[key] = nil
+			ps.timers.sets[key] = nil
 		elseif core.bals[key] == false and core.bals.last[key] == true then
 			timing:start(key)
 		end
@@ -61,13 +61,13 @@ function parse_vitals()
 
 	if gmcp.Char.Vitals.prone == "1" then
 		if not affs:has("prone") then
-			tmp.last_stance = tmp.vitals.last.stance
+			--tmp.last_stance = tmp.vitals.last.stance
 		end
 
 		affs:add("prone", true)
 	else
 		if affs:has("prone") then
-			affs:remove("prone", true) 
+			affs:cured("prone", true) 
 		end
 		
 		tmp.last_stance = nil

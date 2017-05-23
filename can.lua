@@ -21,6 +21,13 @@ act = function ()
 		and not affs:has("tangle")
 end
 
+can = function ()
+	return core.bals.balance
+		and core.bals.equilibrium
+		and core.bals.right_arm
+		and core.bals.left_arm
+end
+
 herb = function ()
 	return core.bals.herb
 		and not core:fscheck("herb")
