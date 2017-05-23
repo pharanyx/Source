@@ -284,6 +284,12 @@ function items_event(self, event)
 	if x then raiseEvent(x, y) end
 end
 
+
+function is_mob_in_room(self, mob)
+	return table.contains(tmp.roomitems, mob) and true or false
+end
+
+
 function has_skill(group, skill)
 	return true
 end

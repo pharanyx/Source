@@ -134,9 +134,131 @@ tips = {
     "Did you know that clicking the character information component will cycle through the available themes?",
     "Want to see the player database data for a name? Simply 'whois <name>' to view all held records.",
     "Player database settings can be found via 'ps pdb show' - Assign alliances and set colours for a multitude of states and affiliations.",
-    
+
 }
+
 
 function show_tip()
     local delay = tempTimer(10, [[ps.showtip(core.tips[math.random(#core.tips)])]])
+end
+
+
+-- Function taken from http://lua-users.org/wiki/CompareTables
+
+function table.compare(t1, t2, orderby, n1, n2, fmt1, fmt2, compf, dupe, callback, callback2)
+    local t1 = t1 or nil
+    local t2 = t2 or nil
+
+    if t1[1] == nil then ps.error("The first table is empty or not index based (t1[1] == nil)") return nil, 0 end
+    if t2[1] == nil then ps.error("The second table is empty or not index based (t2[1] == nil)") return nil, 0 end
+
+    local comp = {}   
+    local counter = 0
+    local list = {}
+    local listlast = orderby:gsub("([^,]*)[,]", function(s) table.insert(list, s) return "" end )
+    
+    table.insert(list, listlast) 
+   
+    for i, v in ipairs(list) do 
+        list[i] = {} 
+        if i == 1 then
+            v = v:gsub("^ORDER BY ",""):gsub("^order by ","")
+        end
+        list[i].name = v:gsub("^%s+",""):gsub("%s+$","")    
+        local _, c = list[i].name:gsub("%w+","")
+        if c>1 then
+            list[i].name = list[i].name:gsub("%s.*$","") 
+            list[i].desc = true 
+        end
+    end
+
+    local function alias(nn, field) 
+        if #nn == 0 then 
+        return field  else return nn[field]
+        end
+    end
+    local fmt1 = fmt1 or function(s) return s end
+    local fmt2 = fmt2 or function(s) return s end
+
+    local t1x = {}
+    local t2x = {}
+    for i, v in ipairs(t1) do
+        t1x[i] = {}
+        t1x[i]._i = i  
+        for j,field in ipairs(list) do
+            t1x[i][field.name] = fmt1( v[ alias(n1,field.name) ] ) 
+        end
+    end
+    for i, v in ipairs(t2) do
+        t2x[i] = {}
+        t2x[i]._i = i 
+        for j, field in ipairs(list) do
+            t2x[i][field.name] = fmt2( v[ alias(n2, field.name) ] )
+        end
+    end
+
+    local sf = function (a,b)
+        for i, v in ipairs(list) do
+            if a[v.name] ~= b[v.name] then
+                if v.desc then
+                    return a[v.name] > b[v.name]
+                else
+                    return a[v.name] < b[v.name]
+                end
+            end
+        end
+        return a._i < b._i
+    end
+
+    table.sort(t1x, sf)
+    table.sort(t2x, sf)
+
+    local i2 = 1
+    local v1f_previous = ""
+    local found = false
+
+    local cfc = compf or function(a, b) return a==b end
+
+    for i1, v1 in ipairs(t1x) do
+        local v1f = v1[list[1].name]
+        if i1 > 1 and v1f_previous == v1f  and comp[i1-1] ~= nil  then
+            i2 = comp[i1-1][1]
+        end
+        found = false 
+
+        while t2x[i2] do
+            counter = counter + 1
+            local v2 = t2x[i2] 
+            local v2f = t2x[i2][list[1].name]
+
+            if cfc(v1f, v2f) then
+                found = true
+                dupe(v1._i, v2._i)
+                if not comp[i1] then
+                    comp[i1] = {}  
+                end
+                table.insert(comp[i1], i2)
+                i2 = i2 + 1
+            elseif v2f > v1f then
+                break
+            elseif v2f < v1f then
+                callback2(v2._i) 
+                i2 = i2 + 1 
+            end
+        end 
+        if not found then
+            callback(v1._i)
+        end
+
+        v1f_previous = v1f
+    end
+
+    if callback2~=nil then
+        while t2x[i2] do
+            callback2(t2x[i2]._i)
+            i2 = i2+1  
+        end
+    end
+
+    return comp , counter
 end

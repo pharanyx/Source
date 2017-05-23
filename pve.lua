@@ -317,8 +317,8 @@ mobs_by_area = {
 	},
 
 	["The village of Bihrkaen"] ={
-		"a purple speckled dildo"
-	}
+		"a mire hound"
+	},
 
 	tiyen_esityi = {
 		"a crazed Nazetu cutter",
@@ -451,11 +451,14 @@ function get_mobs()
 				table.insert(tmp.to_bash, v.id)
 				mmp.stop()
 			else
-				local delay = tempTimer(0.1, [[genrun:continue()]])
+				if not core:fscheck("source genrun continue") then
+					local delay = tempTimer(0.1, [[genrun:continue()]])
+					core:fson("source genrun continue")
+				end
 			end
 		end	
 	end
-
+display(tmp.to_bash)
 	if not tmp.bash_target_acquired then
 		local delay = tempTimer(0.1, [[tmp.target = (next(tmp.to_bash) and tmp.to_bash[1] or "Nothing")]])
 		tmp.bash_target_acquired = true
