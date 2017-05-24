@@ -140,6 +140,7 @@ function arrived()
 			rooms_left_to_touch[vnum] = nil
 		end
 
+		pve:get_mob_table()
 		raiseEvent("source genrun arrived")
 		walking = false
 	end

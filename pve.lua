@@ -437,11 +437,6 @@ mobs_by_area = {
 }
 
 
-function init()
-	local delay = tempTimer(0.1, [[pve:get_mobs()]])
-end
- 
-
 function get_mob_table()
 	local mobiles = {}
 	local area = gmcp.Room.Info.area
@@ -453,10 +448,11 @@ function get_mob_table()
 		end
 	end
 
+	raiseEvent("source got pve targets")
 	return mobiles
 end
 
 
 function bash()
-	local delay = tempTimer(0.1, [[send("combo "..tmp.target.." sdk ucp ucp")]])
+	local delay = tempTimer(0.1, [[send("combo ]]..tmp.target..[[ sdk ucp ucp")]])
 end
