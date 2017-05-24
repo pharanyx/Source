@@ -63,6 +63,8 @@ function init(self, rs)
 
 	get_rooms_for_highlight(gmcp.Room.Info.area)
 
+	tmp.genrunning = true
+
 	raiseEvent("source genrun start")
 end
 
@@ -101,6 +103,7 @@ function stop()
 	raiseEvent("source genrun stop")
 	if genrun.config.return_to_start then
 		ps.echo("Returning you to your starting room!")
+		tmp.genrunning = true
 		mmp.gotoRoom(starting_room)
 	end
 end
@@ -122,7 +125,7 @@ end
 
 
 function arrived()
-	if tmp.genrun then
+	if tmp.genrunning then
 		local vnum = gmcp.Room.Info.num
 		
 		unHighlightRoom(mmp.currentroom) 

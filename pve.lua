@@ -317,7 +317,10 @@ mobs_by_area = {
 	},
 
 	["The village of Bihrkaen"] ={
-		"a mire hound"
+		"a mire hound",
+		"a mire pup",
+		"a bog hound",
+		"an alpha male hound"
 	},
 
 	tiyen_esityi = {
@@ -439,30 +442,18 @@ function init()
 end
  
 
-function get_mobs()
+function get_mob_table()
+	local mobiles = {}
 	local area = gmcp.Room.Info.area
 	local mobs = pve.mobs_by_area[area]
 
-	tmp.to_bash = {}
-
 	for k, v in pairs(tmp.roomitems) do
-		if next(tmp.roomitems) then
-			if table.contains(mobs, v.name) then
-				table.insert(tmp.to_bash, v.id)
-				mmp.stop()
-			else
-				if not core:fscheck("source genrun continue") then
-					local delay = tempTimer(0.1, [[genrun:continue()]])
-					core:fson("source genrun continue")
-				end
-			end
-		end	
+		if table.contains(mobs, v.name) then
+			table.insert(mobiles, v.id)
+		end
 	end
-display(tmp.to_bash)
-	if not tmp.bash_target_acquired then
-		local delay = tempTimer(0.1, [[tmp.target = (next(tmp.to_bash) and tmp.to_bash[1] or "Nothing")]])
-		tmp.bash_target_acquired = true
-	end
+
+	return mobiles
 end
 
 
